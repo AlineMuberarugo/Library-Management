@@ -1,0 +1,99 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+import java.util.ArrayList;
+import java.util.List;
+
+public class LibraryManager {
+   List<Book> books = new ArrayList();
+
+   public LibraryManager() {
+   }
+
+   public void addBook(Book var1) {
+      if (!var1.getAuthor().isEmpty() && !var1.getTitle().isEmpty() && !var1.getCategory().isEmpty()) {
+         for(Book var3 : this.books) {
+            if (var3.getId() == var1.getId()) {
+               System.out.println("The ID :" + var1.getId() + " already exist");
+               return;
+            }
+         }
+
+         this.books.add(var1);
+         System.out.println("The book with ID: " + var1.getId() + " has been added to the collection");
+      } else {
+         System.out.println("We can't add this book to the collection due to the emptness of one of the attributes");
+      }
+   }
+
+   public List<Book> getBooks() {
+      return this.books;
+   }
+
+   public Book searchById(int var1) {
+      for(Book var3 : this.books) {
+         if (var3.getId() == var1) {
+            return var3;
+         }
+      }
+
+      System.out.println("No book with such ID was found");
+      return null;
+   }
+
+   public List<Book> searchByTitle(String var1) {
+      ArrayList var2 = new ArrayList();
+
+      for(Book var4 : this.books) {
+         if (var4.getTitle().equals(var1)) {
+            var2.add(var4);
+         }
+      }
+
+      return var2;
+   }
+
+   public List<Book> searchByAuthor(String var1) {
+      ArrayList var2 = new ArrayList();
+
+      for(Book var4 : this.books) {
+         if (var4.getAuthor().equals(var1)) {
+            var2.add(var4);
+         }
+      }
+
+      return var2;
+   }
+
+   public List<Book> filterByCategory(String var1) {
+      ArrayList var2 = new ArrayList();
+
+      for(Book var4 : this.books) {
+         if (var4.getCategory().equalsIgnoreCase(var1)) {
+            var2.add(var4);
+         }
+      }
+
+      return var2;
+   }
+
+   public void updateBook(int var1, String var2, boolean var3) {
+      Book var4 = this.searchById(var1);
+      var4.setCategory(var2);
+      var4.setAvailable(var3);
+   }
+
+   public void removeBook(int var1) {
+      Book var2 = this.searchById(var1);
+      this.books.remove(var2);
+   }
+
+   public void borrowBook(int var1) {
+      Book var2 = this.searchById(var1);
+      if (var2.isAvailable()) {
+         var2.setAvailable(false);
+         System.out.println("the book =" + var2.getTitle() + " is borrowed right away");
+      } else {
+         System.out.println("THE BOOK IS NOT AVAILABLE IN THE MEANTIME");
+      }
+
+   }
+}
